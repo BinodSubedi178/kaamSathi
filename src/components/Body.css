@@ -1,0 +1,29 @@
+.main-body-wrapper {
+    min-height: 600px;
+}
+
+@media (max-width: 640px) {
+    .input-area {
+        padding: 20px;
+    }
+
+    .input-area input {
+        width: 90%;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 768px) {
+    .input-area input {
+        max-width: 80%;
+    }
+
+    .tabs {
+        max-width: 80%;
+    }
+}
+
+@media (min-width: 768px) {
+    .input-area input {
+        max-width: 50%;
+    }
+}

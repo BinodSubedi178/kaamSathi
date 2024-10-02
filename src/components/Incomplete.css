@@ -1,0 +1,11 @@
+@media (max-width: 640px) {
+    .incomplete-wrapper {
+        width: 90%;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 768px) {
+    .incomplete-wrapper {
+        width: 80%;
+    }
+}
