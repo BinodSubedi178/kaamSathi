@@ -70,7 +70,7 @@ const Body = () => {
   };
 
   const handleKeyDown = (e) => {
-    e.key == "Enter" && handleAddTask();
+    e.key === "Enter" && handleAddTask();
   };
   return (
     <>
