@@ -2,6 +2,11 @@
     min-height: 600px;
 }
 
+.dialogue-box {
+    position: absolute;
+    right: 10px;
+}
+
 @media (max-width: 640px) {
     .input-area {
         padding: 20px;
@@ -9,6 +14,12 @@
 
     .input-area input {
         width: 90%;
+    }
+
+    .dialogue-box {
+        top: 86%;
+        left: 5px;
+        max-width: 60%;
     }
 }
 

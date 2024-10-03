@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Incomplete } from "./Incomplete";
 import { Completed } from "./Completed";
 import "./Body.css";
-import { DialogueBox } from "./DialogueBox";
+import { Confirmation, Congratutlations, Delete, Empty } from "./DialogueBox";
 import { NoTasks, NoCompletedTasks } from "./NoTasks";
 
 const Body = () => {
@@ -12,19 +12,37 @@ const Body = () => {
   const [inputValue, setInputValue] = useState("");
 
   const [completeTrack, setCompleteTrack] = useState([]);
+  const [confirmation, setConfirmation] = useState(false);
+  const [congratutlations, setCongratutlations] = useState(false);
+  const [deleteBox, setDeleteBox] = useState(false);
+  const [emptyBox, setEmptyBox] = useState(false);
 
   const handleAddTask = () => {
-    let id = tasks.length + 1;
-    const newTasks = [
-      {
-        id: id,
-        task: inputValue,
-        completed: false,
-      },
-    ];
-    setTasks([...tasks, ...newTasks]);
-    setInputValue("");
+    if (inputValue !== "") {
+      let id = tasks.length + 1;
+      const newTasks = [
+        {
+          id: id,
+          task: inputValue,
+          completed: false,
+        },
+      ];
+      setTasks([...tasks, ...newTasks]);
+      setInputValue("");
+      setConfirmation(true);
+
+      setTimeout(() => {
+        setConfirmation(false);
+      }, 1500);
+    } else {
+      setEmptyBox(true);
+
+      setTimeout(() => {
+        setEmptyBox(false);
+      }, 1500);
+    }
   };
+
   const handleComplete = ({ id, task }) => {
     const newCompleteTrack = [
       {
@@ -35,14 +53,32 @@ const Body = () => {
     ];
     setCompleteTrack([...completeTrack, ...newCompleteTrack]);
     setTasks(tasks.filter((taskid) => id !== taskid.id));
+    setCongratutlations(true);
+
+    setTimeout(() => {
+      setCongratutlations(false);
+    }, 1500);
   };
 
   const handleDelete = (id) => {
     setCompleteTrack(completeTrack.filter((track) => track.id !== id));
+    setDeleteBox(true);
+
+    setTimeout(() => {
+      setDeleteBox(false);
+    }, 1000);
+  };
+
+  const handleKeyDown = (e) => {
+    e.key == "Enter" && handleAddTask();
   };
   return (
     <>
       <div className="main-body-wrapper min-h-screen flex flex-col">
+        {confirmation && <Confirmation />}
+        {congratutlations && <Congratutlations />}
+        {deleteBox && <Delete />}
+        {emptyBox && <Empty />}
         <div className="input-area px-4 sm:px-6 md:px-10 lg:px-20 py-6 flex-grow">
           <div className="mb-6 flex flex-col sm:flex-row justify-center items-center">
             <input
@@ -54,6 +90,7 @@ const Body = () => {
               onChange={(e) => {
                 setInputValue(e.target.value);
               }}
+              onKeyDown={handleKeyDown}
             />
             <button
               className="mt-2 sm:mt-0 sm:ml-3 p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200"
