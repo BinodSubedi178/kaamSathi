@@ -33,7 +33,7 @@ export const Profile = ({ darkToggle }) => {
 
           <div className="py-2">
             <a
-              href="#"
+              href="/"
               className={`block px-4 py-2 text-sm ${
                 darkToggle
                   ? "text-gray-200 hover:bg-gray-600 dark:hover:text-white"
@@ -42,7 +42,7 @@ export const Profile = ({ darkToggle }) => {
               Profile
             </a>
             <a
-              href="#"
+              href="/"
               className={`block px-4 py-2 text-sm ${
                 darkToggle
                   ? "text-gray-200 hover:bg-gray-600 dark:hover:text-white"
