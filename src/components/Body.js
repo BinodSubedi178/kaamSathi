@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Incomplete } from "./Incomplete";
 import { Completed } from "./Completed";
 import "./Body.css";
-import { Confirmation, Congratutlations, Delete, Empty } from "./DialogueBox";
+import { Confirmation, Congratutlations, Delete, Empty, DarkToggle } from "./DialogueBox";
 import { NoTasks, NoCompletedTasks } from "./NoTasks";
 
-const Body = () => {
+const Body = ({ handleDarkToggle, darkToggle }) => {
   const [toggleValue, setToggleValue] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -30,7 +30,7 @@ const Body = () => {
       setTasks([...tasks, ...newTasks]);
       setInputValue("");
       setConfirmation(true);
-
+      clearTimeout();
       setTimeout(() => {
         setConfirmation(false);
       }, 1500);
@@ -54,7 +54,7 @@ const Body = () => {
     setCompleteTrack([...completeTrack, ...newCompleteTrack]);
     setTasks(tasks.filter((taskid) => id !== taskid.id));
     setCongratutlations(true);
-
+    clearTimeout();
     setTimeout(() => {
       setCongratutlations(false);
     }, 1500);
@@ -64,9 +64,10 @@ const Body = () => {
     setCompleteTrack(completeTrack.filter((track) => track.id !== id));
     setDeleteBox(true);
 
+    clearTimeout();
     setTimeout(() => {
       setDeleteBox(false);
-    }, 1000);
+    }, 1500);
   };
 
   const handleKeyDown = (e) => {
@@ -74,22 +75,32 @@ const Body = () => {
   };
   return (
     <>
-      <div className="main-body-wrapper min-h-screen flex flex-col">
+      <div
+        className={`main-body-wrapper min-h-screen flex flex-col ${
+          darkToggle ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+        }`}>
+        <DarkToggle handleDarkToggle={handleDarkToggle} darkToggle={darkToggle} />
         {confirmation && <Confirmation />}
         {congratutlations && <Congratutlations />}
         {deleteBox && <Delete />}
         {emptyBox && <Empty />}
-        <div className="input-area px-4 sm:px-6 md:px-10 lg:px-20 py-6 flex-grow">
+
+        <div
+          className={`input-area px-4 sm:px-6 md:px-10 lg:px-20 py-6 flex-grow ${
+            darkToggle ? "bg-gray-800" : "bg-gray-50"
+          }`}>
           <div className="mb-6 flex flex-col sm:flex-row justify-center items-center">
             <input
               type="text"
               id="default-input"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-md p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={`border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-md p-2.5 ${
+                darkToggle
+                  ? "bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
+                  : "bg-gray-50 border-gray-300 text-gray-900"
+              }`}
               placeholder="Enter your tasks here!"
               value={inputValue}
-              onChange={(e) => {
-                setInputValue(e.target.value);
-              }}
+              onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
             />
             <button
@@ -104,21 +115,28 @@ const Body = () => {
               setToggleValue={setToggleValue}
               tasks={tasks}
               completeTrack={completeTrack}
+              darkToggle={darkToggle}
             />
           </div>
         </div>
+
         {tasks.length !== 0 || completeTrack.length !== 0 ? (
           toggleValue ? (
-            <Incomplete tasks={tasks} handleComplete={handleComplete} />
+            <Incomplete tasks={tasks} handleComplete={handleComplete} darkToggle={darkToggle} />
           ) : completeTrack.length !== 0 ? (
-            <Completed completeTrack={completeTrack} handleDelete={handleDelete} />
+            <Completed
+              completeTrack={completeTrack}
+              handleDelete={handleDelete}
+              darkToggle={darkToggle}
+            />
           ) : (
-            <NoCompletedTasks />
+            <NoCompletedTasks darkToggle={darkToggle} />
           )
         ) : (
-          <NoTasks />
+          <NoTasks darkToggle={darkToggle} />
         )}
       </div>
+      <hr className={`h-px border-0 ${darkToggle ? "bg-gray-600" : "bg-gray-300"}`} />
     </>
   );
 };

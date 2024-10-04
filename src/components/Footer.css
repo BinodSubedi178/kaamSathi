@@ -108,13 +108,13 @@
     gap: 15px;
 }
 
-svg {
+.icons svg {
     color: #c6c6c6;
     font-size: 2rem;
     transition: transform 0.2s;
 }
 
-svg:hover {
+.icons svg:hover {
     transform: scale(1.1);
 }
 

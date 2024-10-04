@@ -1,24 +1,27 @@
 import Logo from "../assets/Logo.png";
+
+import { Profile } from "./Profile";
 import "./Header.css";
 
-export const Header = () => {
+export const Header = ({ darkToggle }) => {
   return (
     <>
-      <header className="flex justify-between items-center px-6 md:px-10 lg:px-20 bg-gray-100 shadow">
+      <header
+        className={`flex justify-between items-center px-6 md:px-10 lg:px-20 ${
+          darkToggle ? "bg-gray-800" : "bg-gray-100"
+        } shadow`}>
         <img
-          className="h-24 transition-transform duration-200 transform hover:scale-105"
+          className={`logo h-24 transition-transform duration-200 transform hover:scale-105 ${
+            darkToggle ? "filter invert" : ""
+          }`}
           src={Logo}
           alt="Logo"
         />
         <nav className="flex space-x-8">
-          <a
-            href="/"
-            className="text-gray-600 text-lg transition-colors duration-200 hover:text-gray-400 px-6">
-            Home
-          </a>
+          <Profile darkToggle={darkToggle} />
         </nav>
       </header>
-      <hr className="bg-black bg-opacity-21 h-px border-none" />
+      <hr className={`h-px border-0 ${darkToggle ? "bg-gray-600" : "bg-gray-300"}`} />
     </>
   );
 };

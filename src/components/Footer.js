@@ -52,7 +52,7 @@ export const Footer = () => {
 
         <div className="flex flex-col items-center w-full md:w-1/3">
           <span className="text-lg">Follow Us On:</span>
-          <span className="flex space-x-4 mt-2">
+          <span className="icons flex space-x-4 mt-2">
             <FaGithub className="text-gray-400 hover:scale-110 transition-transform" />
             <FaInstagram className="text-gray-400 hover:scale-110 transition-transform" />
             <FaXTwitter className="text-gray-400 hover:scale-110 transition-transform" />
